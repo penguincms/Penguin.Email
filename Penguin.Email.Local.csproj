@@ -5,12 +5,14 @@
     <PackageProjectUrl>https://github.com/penguincms/Penguin.Email</PackageProjectUrl>
     <Version>1.0.0</Version>
     <Description>Not Available</Description>
+    <AssemblyName>Penguin.Email</AssemblyName>
+    <RootNamespace>Penguin.Email</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Penguin.Configuration.Abstractions\Penguin.Configuration.Abstractions.Local.csproj" />
-    <ProjectReference Include="..\Penguin.Extensions.String\Penguin.Extensions.String.Local.csproj" />
     <ProjectReference Include="..\Penguin.DependencyInjection.Abstractions\Penguin.DependencyInjection.Abstractions.Local.csproj" />
     <ProjectReference Include="..\Penguin.Email.Abstractions\Penguin.Email.Abstractions.Local.csproj" />
+    <ProjectReference Include="..\Penguin.Extensions.String\Penguin.Extensions.String.Local.csproj" />
     <ProjectReference Include="..\Penguin.Files.Abstractions\Penguin.Files.Abstractions.Local.csproj" />
     <ProjectReference Include="..\Penguin.Web.Data\Penguin.Web.Data.Local.csproj" />
   </ItemGroup>
