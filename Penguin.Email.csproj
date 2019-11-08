@@ -9,9 +9,9 @@
     <RootNamespace>Penguin.Email</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Penguin.Configuration.Abstractions" Version="3.0.2-T9M3AAF" />
-    <PackageReference Include="Penguin.DependencyInjection.Abstractions" Version="2.1.6-T9M3AAF" />
-    <PackageReference Include="Penguin.Email.Abstractions" Version="1.0.1-T9M3AAF" />
-    <PackageReference Include="Penguin.Web.Data" Version="2.0.1-T9MC5O3" />
+    <PackageReference Include="Penguin.Configuration.Abstractions" Version="3.0.2-T9MJL4F" />
+    <PackageReference Include="Penguin.DependencyInjection.Abstractions" Version="2.1.6-T9MJL4F" />
+    <PackageReference Include="Penguin.Email.Abstractions" Version="1.0.1-T9MJL4F" />
+    <PackageReference Include="Penguin.Web.Data" Version="2.0.1-T9MJL4F" />
   </ItemGroup>
 </Project>
