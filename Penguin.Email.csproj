@@ -10,9 +10,9 @@
     <DocumentationFile>Penguin.Email.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Penguin.Configuration.Abstractions" Version="3.0.2-T9QC72V" />
-    <PackageReference Include="Penguin.DependencyInjection.Abstractions" Version="2.1.6-T9QC72V" />
-    <PackageReference Include="Penguin.Email.Abstractions" Version="1.0.1-T9QC72V" />
-    <PackageReference Include="Penguin.Web.Data" Version="2.0.1-T9QC72V" />
+    <PackageReference Include="Penguin.Configuration.Abstractions" Version="3.0.2-T9QUIQ4" />
+    <PackageReference Include="Penguin.DependencyInjection.Abstractions" Version="2.1.6-T9QUIQ4" />
+    <PackageReference Include="Penguin.Email.Abstractions" Version="1.0.1-T9QUIQ4" />
+    <PackageReference Include="Penguin.Web.Data" Version="2.0.1-T9QUIQ4" />
   </ItemGroup>
 </Project>
