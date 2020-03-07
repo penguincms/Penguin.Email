@@ -13,6 +13,6 @@
     <PackageReference Include="Penguin.DependencyInjection.Abstractions" Version="2.1.6-T9RVMZA" />
     <PackageReference Include="Penguin.Email.Abstractions" Version="1.0.1-T9RVMZA" />
     <PackageReference Include="Penguin.Web.Data" Version="2.0.1-T9RVMZA" />
-    <PackageReference Include="Penguin.Configuration.Abstractions" Version="3.0.2-T9SAD4U" />
+    <PackageReference Include="Penguin.Configuration.Abstractions" Version="3.0.2-T9SPWN8" />
   </ItemGroup>
 </Project>
