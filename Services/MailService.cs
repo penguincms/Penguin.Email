@@ -15,15 +15,14 @@ namespace Penguin.Email.Services
 {
     /// <summary>
     /// A Service intended on sending out emails defined by an interface, pulling information required from a provided configuration provider
-    /// </summary> 
+    /// </summary>
     public partial class MailService : ISelfRegistering, ISendMail
     {
+
         /// <summary>
         /// A configuration provider to retrieve configurations from
         /// </summary>
         protected IProvideConfigurations ConfigurationProvider { get; set; }
-
-        private const string EmailNotSetupMessage = "Email defaults have not been properly set up";
 
         /// <summary>
         /// Constructs a new instance of this mail service with "hardcoded" values instead of using a dynamic provider
@@ -46,7 +45,7 @@ namespace Penguin.Email.Services
         /// <param name="messageBus">An optional message bus for sending out email related messages</param>
         public MailService(IProvideConfigurations configurationProvider)
         {
-            ConfigurationProvider = configurationProvider;
+            this.ConfigurationProvider = configurationProvider;
         }
 
         /// <summary>
@@ -72,7 +71,7 @@ namespace Penguin.Email.Services
         {
             Contract.Requires(message != null);
 
-            Dictionary<string, string> EmailSettings = ConfigurationProvider.GetDictionary($"Email.{message.From}") ?? ConfigurationProvider.GetDictionary($"Email.Default");
+            Dictionary<string, string> EmailSettings = this.ConfigurationProvider.GetDictionary($"Email.{message.From}") ?? this.ConfigurationProvider.GetDictionary($"Email.Default");
 
             if (EmailSettings is null)
             {

@@ -14,13 +14,13 @@ namespace Penguin.Email
 
         public MailConfigurationProvider(string From, string Login, string Password, string Server, int Port = 25, string ConfigurationName = "Default")
         {
-            AddConfiguration(BuildConfiguration(From, Login, Password, Server, Port, ConfigurationName));
+            this.AddConfiguration(BuildConfiguration(From, Login, Password, Server, Port, ConfigurationName));
         }
 
         public MailConfigurationProvider(Dictionary<string, string> Configurations, bool errorOnMissingKey = false)
         {
-            AllConfigurations = Configurations;
-            ErrorOnMissingKey = errorOnMissingKey;
+            this.AllConfigurations = Configurations;
+            this.ErrorOnMissingKey = errorOnMissingKey;
         }
 
         public static (string Name, string Value) BuildConfiguration(string From, string Login, string Password, string Server, int Port = 25, string ConfigurationName = "Default")
@@ -30,26 +30,26 @@ namespace Penguin.Email
 
         public void AddConfiguration(string Name, string Value)
         {
-            AddConfiguration((Name, Value));
+            this.AddConfiguration((Name, Value));
         }
 
         public void AddConfiguration((string Name, string Value) toAdd)
         {
-            AllConfigurations.Add(toAdd.Name, toAdd.Value);
+            this.AllConfigurations.Add(toAdd.Name, toAdd.Value);
         }
 
         public void AddConfiguration(string From, string Login, string Password, string Server, int Port = 25, string ConfigurationName = "Default")
         {
-            AddConfiguration(BuildConfiguration(From, Login, Password, Server, Port, ConfigurationName));
+            this.AddConfiguration(BuildConfiguration(From, Login, Password, Server, Port, ConfigurationName));
         }
 
         public string GetConfiguration(string Key)
         {
-            if (AllConfigurations.ContainsKey(Key))
+            if (this.AllConfigurations.ContainsKey(Key))
             {
-                return AllConfigurations[Key];
+                return this.AllConfigurations[Key];
             }
-            else if (ErrorOnMissingKey)
+            else if (this.ErrorOnMissingKey)
             {
                 throw new KeyNotFoundException($"The requested configuration {Key} was not found in the underlying dictionary");
             }
@@ -64,6 +64,9 @@ namespace Penguin.Email
             throw new NotImplementedException();
         }
 
-        bool IProvideConfigurations.SetConfiguration(string Name, string Value) => throw new NotImplementedException();
+        bool IProvideConfigurations.SetConfiguration(string Name, string Value)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

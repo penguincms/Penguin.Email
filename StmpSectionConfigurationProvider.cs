@@ -31,7 +31,7 @@ namespace Penguin.Email
             {
                 System.Net.NetworkCredential credential = (System.Net.NetworkCredential)client.Credentials;
                 (string Name, string Value) = MailConfigurationProvider.BuildConfiguration(credential.UserName, credential.UserName, credential.Password, client.Host, client.Port);
-                AllConfigurations.Add(Name, Value);
+                this.AllConfigurations.Add(Name, Value);
             }
         }
 
@@ -42,9 +42,9 @@ namespace Penguin.Email
         /// <returns></returns>
         public string GetConfiguration(string Key)
         {
-            if (AllConfigurations.ContainsKey(Key))
+            if (this.AllConfigurations.ContainsKey(Key))
             {
-                return AllConfigurations[Key];
+                return this.AllConfigurations[Key];
             }
             else
             {
@@ -62,6 +62,9 @@ namespace Penguin.Email
             throw new NotImplementedException();
         }
 
-        bool IProvideConfigurations.SetConfiguration(string Name, string Value) => throw new NotImplementedException();
+        bool IProvideConfigurations.SetConfiguration(string Name, string Value)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
