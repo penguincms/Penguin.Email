@@ -52,7 +52,7 @@
         <member name="T:Penguin.Email.Services.MailService">
             <summary>
             A Service intended on sending out emails defined by an interface, pulling information required from a provided configuration provider
-            </summary> 
+            </summary>
         </member>
         <member name="P:Penguin.Email.Services.MailService.ConfigurationProvider">
             <summary>
