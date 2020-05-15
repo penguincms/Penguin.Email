@@ -18,7 +18,6 @@ namespace Penguin.Email.Services
     /// </summary>
     public partial class MailService : ISelfRegistering, ISendMail
     {
-
         /// <summary>
         /// A configuration provider to retrieve configurations from
         /// </summary>
@@ -33,7 +32,6 @@ namespace Penguin.Email.Services
         /// <param name="Server">The STMP server address</param>
         /// <param name="Port">The STMP server port</param>
         /// <param name="ConfigurationName">The outgoing email address that these configurations will apply to. Should be left default unless you know what you're doing</param>
-        /// <param name="messageBus">An optional message bus for sending out email related messages</param>
         public MailService(string From, string Login, string Password, string Server, int Port = 25, string ConfigurationName = "Default") : this(new MailConfigurationProvider(From, Login, Password, Server, Port, ConfigurationName))
         {
         }
@@ -42,7 +40,6 @@ namespace Penguin.Email.Services
         /// Constructs a new instance of this mail service
         /// </summary>
         /// <param name="configurationProvider">The configuration provider to get email configurations from</param>
-        /// <param name="messageBus">An optional message bus for sending out email related messages</param>
         public MailService(IProvideConfigurations configurationProvider)
         {
             this.ConfigurationProvider = configurationProvider;

@@ -69,14 +69,12 @@
             <param name="Server">The STMP server address</param>
             <param name="Port">The STMP server port</param>
             <param name="ConfigurationName">The outgoing email address that these configurations will apply to. Should be left default unless you know what you're doing</param>
-            <param name="messageBus">An optional message bus for sending out email related messages</param>
         </member>
         <member name="M:Penguin.Email.Services.MailService.#ctor(Penguin.Configuration.Abstractions.Interfaces.IProvideConfigurations)">
             <summary>
             Constructs a new instance of this mail service
             </summary>
             <param name="configurationProvider">The configuration provider to get email configurations from</param>
-            <param name="messageBus">An optional message bus for sending out email related messages</param>
         </member>
         <member name="M:Penguin.Email.Services.MailService.BuildConfigurationString(System.String,System.String,System.String,System.String,System.Int32,System.String)">
             <summary>
