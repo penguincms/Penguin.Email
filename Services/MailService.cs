@@ -1,4 +1,6 @@
-﻿using Penguin.Configuration.Abstractions.Extensions;
+﻿using MailKit.Net.Smtp;
+using MimeKit;
+using Penguin.Configuration.Abstractions.Extensions;
 using Penguin.Configuration.Abstractions.Interfaces;
 using Penguin.DependencyInjection.Abstractions.Interfaces;
 using Penguin.Email.Abstractions.Interfaces;
@@ -8,8 +10,8 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Net;
-using System.Net.Mail;
 
 namespace Penguin.Email.Services
 {
@@ -87,60 +89,78 @@ namespace Penguin.Email.Services
 
             int Port = int.Parse(EmailSettings["Port"], NumberStyles.Integer, CultureInfo.CurrentCulture);
 
-            using (SmtpClient client = new SmtpClient(EmailSettings["Server"], Port)
+            using (SmtpClient client = new SmtpClient())
             {
-                EnableSsl = true
-            })
-            {
+                client.Connect(EmailSettings["Server"], Port, MailKit.Security.SecureSocketOptions.Auto);
+
                 if (EmailSettings.ContainsKey("Password"))
                 {
                     string Password = EmailSettings["Password"];
                     string Login = EmailSettings.TryGetValue("Login", out string login) ? login : From;
-                    client.UseDefaultCredentials = false;
-                    client.Credentials = new NetworkCredential(Login, Password);
+
+                    client.Authenticate(Login, Password);
                 }
 
-                using (System.Net.Mail.MailMessage mailMessage = new System.Net.Mail.MailMessage
+                MimeMessage mailMessage = new MimeMessage()
                 {
-                    From = new MailAddress(From),
-                    Sender = new MailAddress(From),
-                    Subject = message.Subject,
-                    Body = message.Body,
-                    IsBodyHtml = message.IsHtml
-                })
+                    Sender = new MailboxAddress(From),
+                    Subject = message.Subject
+                };
+
+                TextPart body = new TextPart(message.IsHtml ? MimeKit.Text.TextFormat.Html : MimeKit.Text.TextFormat.Plain) { Text = message.Body };
+
+                mailMessage.From.Add(new MailboxAddress(From));
+
+                foreach (string Recipient in message.Recipients)
                 {
-                    foreach (string Recipient in message.Recipients)
-                    {
-                        mailMessage.To.Add(Recipient);
-                    }
-
-                    if (message.CCRecipients != null)
-                    {
-                        foreach (string CCRecipient in message.CCRecipients)
-                        {
-                            mailMessage.CC.Add(CCRecipient);
-                        }
-                    }
-
-                    if (message.BCCRecipients != null)
-                    {
-                        foreach (string BCCRecipient in message.BCCRecipients)
-                        {
-                            mailMessage.Bcc.Add(BCCRecipient);
-                        }
-                    }
-
-                    if (message.Attachments != null)
-                    {
-                        foreach (IFile file in message.Attachments)
-                        {
-                            Stream stream = new MemoryStream(file.Data);
-                            mailMessage.Attachments.Add(new Attachment(stream, file.FullName, Penguin.Web.Data.MimeMappings.GetMimeType(Path.GetExtension(file.FullName))));
-                        }
-                    }
-
-                    client.Send(mailMessage);
+                    mailMessage.To.Add(new MailboxAddress(Recipient));
                 }
+
+                if (message.CCRecipients != null)
+                {
+                    foreach (string CCRecipient in message.CCRecipients)
+                    {
+                        mailMessage.Cc.Add(new MailboxAddress(CCRecipient));
+                    }
+                }
+
+                if (message.BCCRecipients != null)
+                {
+                    foreach (string BCCRecipient in message.BCCRecipients)
+                    {
+                        mailMessage.Bcc.Add(new MailboxAddress(BCCRecipient));
+                    }
+                }
+
+                if (message.Attachments != null && message.Attachments.Any())
+                {
+                    Multipart bodyPart = new Multipart("mixed");
+
+                    mailMessage.Body = bodyPart;
+
+                    bodyPart.Add(body);
+
+                    foreach (IFile file in message.Attachments)
+                    {
+                        string mimeType = Penguin.Web.Data.MimeMappings.GetMimeType(Path.GetExtension(file.FullName));
+
+                        MimePart attachment = new MimePart(mimeType)
+                        {
+                            Content = new MimeContent(new MemoryStream(file.Data)),
+                            ContentDisposition = new ContentDisposition(ContentDisposition.Attachment),
+                            ContentTransferEncoding = ContentEncoding.Base64,
+                            FileName = Path.GetFileName(file.FullName)
+                        };
+
+                        bodyPart.Add(attachment);
+                    }
+                }
+                else
+                {
+                    mailMessage.Body = body;
+                }
+
+                client.Send(mailMessage);
             }
         }
     }
