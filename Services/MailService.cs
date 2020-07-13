@@ -67,7 +67,10 @@ namespace Penguin.Email.Services
         /// <param name="message">The email definition to send</param>
         public void Send(IEmailMessage message)
         {
-            Contract.Requires(message != null);
+            if (message is null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
 
             Dictionary<string, string> EmailSettings = this.ConfigurationProvider.GetDictionary($"Email.{message.From}") ?? this.ConfigurationProvider.GetDictionary($"Email.Default");
 
