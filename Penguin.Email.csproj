@@ -11,9 +11,9 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="MailKit" Version="2.6.0" />
-    <PackageReference Include="Penguin.Web.Data" Version="5.0.1-T9ZTQVZ" />
-    <PackageReference Include="Penguin.DependencyInjection.Abstractions" Version="5.0.1-T9ZTQVZ" />
-    <PackageReference Include="Penguin.Email.Abstractions" Version="5.0.1-T9ZTQVZ" />
-    <PackageReference Include="Penguin.Configuration.Abstractions" Version="5.0.1-T9ZTQVZ" />
+    <PackageReference Include="Penguin.Web.Data" Version="5.0.1-TA29PDE" />
+    <PackageReference Include="Penguin.DependencyInjection.Abstractions" Version="5.0.1-TA29PDE" />
+    <PackageReference Include="Penguin.Email.Abstractions" Version="5.0.1-TA29PDE" />
+    <PackageReference Include="Penguin.Configuration.Abstractions" Version="5.0.1-TA29PDE" />
   </ItemGroup>
 </Project>
