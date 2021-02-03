@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageProjectUrl>https://github.com/penguincms/Penguin.Email</PackageProjectUrl>
-    <Version>5.0.0</Version>
+    <Version>5.0.1</Version>
     <Description>Not Available</Description>
     <AssemblyName>Penguin.Email</AssemblyName>
     <RootNamespace>Penguin.Email</RootNamespace>
@@ -11,9 +11,9 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="MailKit" Version="2.9.0" />
-    <PackageReference Include="Penguin.Web.Data" Version="5.0.1-TA99DVY" />
-    <PackageReference Include="Penguin.DependencyInjection.Abstractions" Version="5.0.1-TA99DVY" />
-    <PackageReference Include="Penguin.Email.Abstractions" Version="5.0.1-TA99DVY" />
-    <PackageReference Include="Penguin.Configuration.Abstractions" Version="5.0.1-TA99DVY" />
+    <PackageReference Include="Penguin.Web.Data" Version="5.0.2-TA9KKLU" />
+    <PackageReference Include="Penguin.DependencyInjection.Abstractions" Version="5.0.2-TA9KKLU" />
+    <PackageReference Include="Penguin.Email.Abstractions" Version="5.0.2-TA9KKLU" />
+    <PackageReference Include="Penguin.Configuration.Abstractions" Version="5.0.2-TA9KKLU" />
   </ItemGroup>
 </Project>
