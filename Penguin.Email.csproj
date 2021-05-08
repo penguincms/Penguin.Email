@@ -14,6 +14,6 @@
     <PackageReference Include="Penguin.Web.Data" Version="5.0.4" />
     <PackageReference Include="Penguin.DependencyInjection.Abstractions" Version="5.0.4" />
     <PackageReference Include="Penguin.Email.Abstractions" Version="5.0.4" />
-    <PackageReference Include="Penguin.Configuration.Abstractions" Version="5.0.4" />
+    <PackageReference Include="Penguin.Configuration.Abstractions" Version="5.0.6-TAEO1KM" />
   </ItemGroup>
 </Project>
