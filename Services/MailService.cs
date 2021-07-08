@@ -104,24 +104,24 @@ namespace Penguin.Email.Services
 
                 MimeMessage mailMessage = new MimeMessage()
                 {
-                    Sender = new MailboxAddress(From),
+                    Sender = MailboxAddress.Parse(From),
                     Subject = message.Subject
                 };
 
                 TextPart body = new TextPart(message.IsHtml ? MimeKit.Text.TextFormat.Html : MimeKit.Text.TextFormat.Plain) { Text = message.Body };
 
-                mailMessage.From.Add(new MailboxAddress(From));
+                mailMessage.From.Add(MailboxAddress.Parse(From));
 
                 foreach (string Recipient in message.Recipients)
                 {
-                    mailMessage.To.Add(new MailboxAddress(Recipient));
+                    mailMessage.To.Add(MailboxAddress.Parse(Recipient));
                 }
 
                 if (message.CCRecipients != null)
                 {
                     foreach (string CCRecipient in message.CCRecipients)
                     {
-                        mailMessage.Cc.Add(new MailboxAddress(CCRecipient));
+                        mailMessage.Cc.Add(MailboxAddress.Parse(CCRecipient));
                     }
                 }
 
@@ -129,7 +129,7 @@ namespace Penguin.Email.Services
                 {
                     foreach (string BCCRecipient in message.BCCRecipients)
                     {
-                        mailMessage.Bcc.Add(new MailboxAddress(BCCRecipient));
+                        mailMessage.Bcc.Add(MailboxAddress.Parse(BCCRecipient));
                     }
                 }
 

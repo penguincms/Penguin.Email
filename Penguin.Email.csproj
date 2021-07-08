@@ -2,7 +2,7 @@
   <Import Project="Penguin.Projects.Shared\Penguin.Projects.Shared.csproj" />
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <PackageProjectUrl>https://github.com/penguincms/Penguin.Email</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/PenguinCMS/Penguin.Email</PackageProjectUrl>
     <Version>5.0.5</Version>
     <Description>Not Available</Description>
     <AssemblyName>Penguin.Email</AssemblyName>
@@ -11,9 +11,9 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="MailKit" Version="2.9.0" />
-    <PackageReference Include="Penguin.Web.Data" Version="5.0.4" />
-    <PackageReference Include="Penguin.DependencyInjection.Abstractions" Version="5.0.4" />
-    <PackageReference Include="Penguin.Email.Abstractions" Version="5.0.4" />
-    <PackageReference Include="Penguin.Configuration.Abstractions" Version="5.0.6-TAEO1KM" />
+    <PackageReference Include="Penguin.Web.Data" Version="5.0.6-TAHULSY" />
+    <PackageReference Include="Penguin.DependencyInjection.Abstractions" Version="5.0.6-TAHULSY" />
+    <PackageReference Include="Penguin.Email.Abstractions" Version="5.0.6-TAHULSY" />
+    <PackageReference Include="Penguin.Configuration.Abstractions" Version="5.0.6-TAHULSY" />
   </ItemGroup>
 </Project>
