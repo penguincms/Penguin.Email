@@ -55,10 +55,7 @@ namespace Penguin.Email.Services
         /// <param name="Port">The STMP server port</param>
         /// <param name="ConfigurationName">The outgoing email address that these configurations will apply to. Should be left default unless you know what you're doing</param>
         /// <returns>a configuration name/value pair that can be inserted into a configuration provider to set up an instance of this service</returns>
-        public static (string Name, string Value) BuildConfigurationString(string From, string Login, string Password, string Server, int Port = 25, string ConfigurationName = "Default")
-        {
-            return MailConfigurationProvider.BuildConfiguration(From, Login, Password, Server, Port, ConfigurationName);
-        }
+        public static (string Name, string Value) BuildConfigurationString(string From, string Login, string Password, string Server, int Port = 25, string ConfigurationName = "Default") => MailConfigurationProvider.BuildConfiguration(From, Login, Password, Server, Port, ConfigurationName);
 
         /// <summary>
         /// Sends an email generated from the provided email definition

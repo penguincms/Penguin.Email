@@ -57,14 +57,8 @@ namespace Penguin.Email
         /// </summary>
         /// <param name="Name"></param>
         /// <returns></returns>
-        public string GetConnectionString(string Name)
-        {
-            throw new NotImplementedException();
-        }
+        public string GetConnectionString(string Name) => throw new NotImplementedException();
 
-        bool IProvideConfigurations.SetConfiguration(string Name, string Value)
-        {
-            throw new NotImplementedException();
-        }
+        bool IProvideConfigurations.SetConfiguration(string Name, string Value) => throw new NotImplementedException();
     }
 }

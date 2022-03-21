@@ -23,25 +23,13 @@ namespace Penguin.Email
             this.ErrorOnMissingKey = errorOnMissingKey;
         }
 
-        public static (string Name, string Value) BuildConfiguration(string From, string Login, string Password, string Server, int Port = 25, string ConfigurationName = "Default")
-        {
-            return ($"Email.{ConfigurationName}", $"From={From};Port={Port};Password={Password};Server={Server};Login={Login}");
-        }
+        public static (string Name, string Value) BuildConfiguration(string From, string Login, string Password, string Server, int Port = 25, string ConfigurationName = "Default") => ($"Email.{ConfigurationName}", $"From={From};Port={Port};Password={Password};Server={Server};Login={Login}");
 
-        public void AddConfiguration(string Name, string Value)
-        {
-            this.AddConfiguration((Name, Value));
-        }
+        public void AddConfiguration(string Name, string Value) => this.AddConfiguration((Name, Value));
 
-        public void AddConfiguration((string Name, string Value) toAdd)
-        {
-            this.AllConfigurations.Add(toAdd.Name, toAdd.Value);
-        }
+        public void AddConfiguration((string Name, string Value) toAdd) => this.AllConfigurations.Add(toAdd.Name, toAdd.Value);
 
-        public void AddConfiguration(string From, string Login, string Password, string Server, int Port = 25, string ConfigurationName = "Default")
-        {
-            this.AddConfiguration(BuildConfiguration(From, Login, Password, Server, Port, ConfigurationName));
-        }
+        public void AddConfiguration(string From, string Login, string Password, string Server, int Port = 25, string ConfigurationName = "Default") => this.AddConfiguration(BuildConfiguration(From, Login, Password, Server, Port, ConfigurationName));
 
         public string GetConfiguration(string Key)
         {
@@ -59,14 +47,8 @@ namespace Penguin.Email
             }
         }
 
-        public string GetConnectionString(string Name)
-        {
-            throw new NotImplementedException();
-        }
+        public string GetConnectionString(string Name) => throw new NotImplementedException();
 
-        bool IProvideConfigurations.SetConfiguration(string Name, string Value)
-        {
-            throw new NotImplementedException();
-        }
+        bool IProvideConfigurations.SetConfiguration(string Name, string Value) => throw new NotImplementedException();
     }
 }
