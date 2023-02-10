@@ -45,9 +45,9 @@ namespace Penguin.Email
 
         public string GetConfiguration(string Key)
         {
-            if (this.AllConfigurations.ContainsKey(Key))
+            if (this.AllConfigurations.TryGetValue(Key, out string value))
             {
-                return this.AllConfigurations[Key];
+                return value;
             }
             else if (this.ErrorOnMissingKey)
             {
