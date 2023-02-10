@@ -9,7 +9,9 @@ namespace Penguin.Email
         public Dictionary<string, string> AllConfigurations { get; protected set; } = new Dictionary<string, string>();
 
         public Dictionary<string, string> AllConnectionStrings => throw new NotImplementedException();
+
         bool IProvideConfigurations.CanWrite => false;
+
         public bool ErrorOnMissingKey { get; set; }
 
         public MailConfigurationProvider(string From, string Login, string Password, string Server, int Port = 25, string ConfigurationName = "Default")
