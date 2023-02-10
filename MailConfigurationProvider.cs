@@ -14,13 +14,13 @@ namespace Penguin.Email
 
         public MailConfigurationProvider(string From, string Login, string Password, string Server, int Port = 25, string ConfigurationName = "Default")
         {
-            this.AddConfiguration(BuildConfiguration(From, Login, Password, Server, Port, ConfigurationName));
+            AddConfiguration(BuildConfiguration(From, Login, Password, Server, Port, ConfigurationName));
         }
 
         public MailConfigurationProvider(Dictionary<string, string> Configurations, bool errorOnMissingKey = false)
         {
-            this.AllConfigurations = Configurations;
-            this.ErrorOnMissingKey = errorOnMissingKey;
+            AllConfigurations = Configurations;
+            ErrorOnMissingKey = errorOnMissingKey;
         }
 
         public static (string Name, string Value) BuildConfiguration(string From, string Login, string Password, string Server, int Port = 25, string ConfigurationName = "Default")
@@ -30,33 +30,26 @@ namespace Penguin.Email
 
         public void AddConfiguration(string Name, string Value)
         {
-            this.AddConfiguration((Name, Value));
+            AddConfiguration((Name, Value));
         }
 
         public void AddConfiguration((string Name, string Value) toAdd)
         {
-            this.AllConfigurations.Add(toAdd.Name, toAdd.Value);
+            AllConfigurations.Add(toAdd.Name, toAdd.Value);
         }
 
         public void AddConfiguration(string From, string Login, string Password, string Server, int Port = 25, string ConfigurationName = "Default")
         {
-            this.AddConfiguration(BuildConfiguration(From, Login, Password, Server, Port, ConfigurationName));
+            AddConfiguration(BuildConfiguration(From, Login, Password, Server, Port, ConfigurationName));
         }
 
         public string GetConfiguration(string Key)
         {
-            if (this.AllConfigurations.TryGetValue(Key, out string value))
-            {
-                return value;
-            }
-            else if (this.ErrorOnMissingKey)
-            {
-                throw new KeyNotFoundException($"The requested configuration {Key} was not found in the underlying dictionary");
-            }
-            else
-            {
-                return null;
-            }
+            return AllConfigurations.TryGetValue(Key, out string value)
+                ? value
+                : ErrorOnMissingKey
+                    ? throw new KeyNotFoundException($"The requested configuration {Key} was not found in the underlying dictionary")
+                    : null;
         }
 
         public string GetConnectionString(string Name)

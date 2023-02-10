@@ -27,12 +27,10 @@ namespace Penguin.Email
         /// </summary>
         public StmpSectionConfigurationProvider()
         {
-            using (SmtpClient client = new SmtpClient())
-            {
-                System.Net.NetworkCredential credential = (System.Net.NetworkCredential)client.Credentials;
-                (string Name, string Value) = MailConfigurationProvider.BuildConfiguration(credential.UserName, credential.UserName, credential.Password, client.Host, client.Port);
-                this.AllConfigurations.Add(Name, Value);
-            }
+            using SmtpClient client = new();
+            System.Net.NetworkCredential credential = (System.Net.NetworkCredential)client.Credentials;
+            (string Name, string Value) = MailConfigurationProvider.BuildConfiguration(credential.UserName, credential.UserName, credential.Password, client.Host, client.Port);
+            AllConfigurations.Add(Name, Value);
         }
 
         /// <summary>
@@ -42,14 +40,7 @@ namespace Penguin.Email
         /// <returns></returns>
         public string GetConfiguration(string Key)
         {
-            if (this.AllConfigurations.ContainsKey(Key))
-            {
-                return this.AllConfigurations[Key];
-            }
-            else
-            {
-                return null;
-            }
+            return AllConfigurations.TryGetValue(Key, out string value) ? value : null;
         }
 
         /// <summary>

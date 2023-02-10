@@ -42,7 +42,7 @@ namespace Penguin.Email.Services
         /// <param name="configurationProvider">The configuration provider to get email configurations from</param>
         public MailService(IProvideConfigurations configurationProvider)
         {
-            this.ConfigurationProvider = configurationProvider;
+            ConfigurationProvider = configurationProvider;
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Penguin.Email.Services
                 throw new ArgumentNullException(nameof(message));
             }
 
-            Dictionary<string, string> EmailSettings = this.ConfigurationProvider.GetDictionary($"Email.{message.From}") ?? this.ConfigurationProvider.GetDictionary($"Email.Default");
+            Dictionary<string, string> EmailSettings = ConfigurationProvider.GetDictionary($"Email.{message.From}") ?? ConfigurationProvider.GetDictionary($"Email.Default");
 
             if (EmailSettings is null)
             {
@@ -90,79 +90,77 @@ namespace Penguin.Email.Services
 
             int Port = int.Parse(EmailSettings["Port"], NumberStyles.Integer, CultureInfo.CurrentCulture);
 
-            using (SmtpClient client = new SmtpClient())
+            using SmtpClient client = new();
+            client.Connect(EmailSettings["Server"], Port, MailKit.Security.SecureSocketOptions.Auto);
+
+            if (EmailSettings.TryGetValue("Password", out string value))
             {
-                client.Connect(EmailSettings["Server"], Port, MailKit.Security.SecureSocketOptions.Auto);
+                string Password = value;
+                string Login = EmailSettings.TryGetValue("Login", out string login) ? login : From;
 
-                if (EmailSettings.ContainsKey("Password"))
-                {
-                    string Password = EmailSettings["Password"];
-                    string Login = EmailSettings.TryGetValue("Login", out string login) ? login : From;
-
-                    client.Authenticate(Login, Password);
-                }
-
-                MimeMessage mailMessage = new MimeMessage()
-                {
-                    Sender = MailboxAddress.Parse(From.Trim()),
-                    Subject = message.Subject
-                };
-
-                TextPart body = new TextPart(message.IsHtml ? MimeKit.Text.TextFormat.Html : MimeKit.Text.TextFormat.Plain) { Text = message.Body };
-
-                mailMessage.From.Add(MailboxAddress.Parse(From.Trim()));
-
-                foreach (string Recipient in message.Recipients)
-                {
-                    mailMessage.To.Add(MailboxAddress.Parse(Recipient.Trim()));
-                }
-
-                if (message.CCRecipients != null)
-                {
-                    foreach (string CCRecipient in message.CCRecipients)
-                    {
-                        mailMessage.Cc.Add(MailboxAddress.Parse(CCRecipient.Trim()));
-                    }
-                }
-
-                if (message.BCCRecipients != null)
-                {
-                    foreach (string BCCRecipient in message.BCCRecipients)
-                    {
-                        mailMessage.Bcc.Add(MailboxAddress.Parse(BCCRecipient.Trim()));
-                    }
-                }
-
-                if (message.Attachments != null && message.Attachments.Any())
-                {
-                    Multipart bodyPart = new Multipart("mixed");
-
-                    mailMessage.Body = bodyPart;
-
-                    bodyPart.Add(body);
-
-                    foreach (IFile file in message.Attachments)
-                    {
-                        string mimeType = Penguin.Web.Data.MimeMappings.GetMimeType(Path.GetExtension(file.FullName));
-
-                        MimePart attachment = new MimePart(mimeType)
-                        {
-                            Content = new MimeContent(new MemoryStream(file.Data)),
-                            ContentDisposition = new ContentDisposition(ContentDisposition.Attachment),
-                            ContentTransferEncoding = ContentEncoding.Base64,
-                            FileName = Path.GetFileName(file.FullName)
-                        };
-
-                        bodyPart.Add(attachment);
-                    }
-                }
-                else
-                {
-                    mailMessage.Body = body;
-                }
-
-                client.Send(mailMessage);
+                client.Authenticate(Login, Password);
             }
+
+            MimeMessage mailMessage = new()
+            {
+                Sender = MailboxAddress.Parse(From.Trim()),
+                Subject = message.Subject
+            };
+
+            TextPart body = new(message.IsHtml ? MimeKit.Text.TextFormat.Html : MimeKit.Text.TextFormat.Plain) { Text = message.Body };
+
+            mailMessage.From.Add(MailboxAddress.Parse(From.Trim()));
+
+            foreach (string Recipient in message.Recipients)
+            {
+                mailMessage.To.Add(MailboxAddress.Parse(Recipient.Trim()));
+            }
+
+            if (message.CCRecipients != null)
+            {
+                foreach (string CCRecipient in message.CCRecipients)
+                {
+                    mailMessage.Cc.Add(MailboxAddress.Parse(CCRecipient.Trim()));
+                }
+            }
+
+            if (message.BCCRecipients != null)
+            {
+                foreach (string BCCRecipient in message.BCCRecipients)
+                {
+                    mailMessage.Bcc.Add(MailboxAddress.Parse(BCCRecipient.Trim()));
+                }
+            }
+
+            if (message.Attachments != null && message.Attachments.Any())
+            {
+                Multipart bodyPart = new("mixed");
+
+                mailMessage.Body = bodyPart;
+
+                bodyPart.Add(body);
+
+                foreach (IFile file in message.Attachments)
+                {
+                    string mimeType = Penguin.Web.Data.MimeMappings.GetMimeType(Path.GetExtension(file.FullName));
+
+                    MimePart attachment = new(mimeType)
+                    {
+                        Content = new MimeContent(new MemoryStream(file.Data)),
+                        ContentDisposition = new ContentDisposition(ContentDisposition.Attachment),
+                        ContentTransferEncoding = ContentEncoding.Base64,
+                        FileName = Path.GetFileName(file.FullName)
+                    };
+
+                    bodyPart.Add(attachment);
+                }
+            }
+            else
+            {
+                mailMessage.Body = body;
+            }
+
+            client.Send(mailMessage);
         }
     }
 }
